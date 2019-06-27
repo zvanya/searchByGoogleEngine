@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>JSON Custom Search API Example</title>
+</head>
+<body>
+    <div id="content"></div>
+    <script>
+        const corsUrl = 'https://cors-anywhere.herokuapp.com/';
+        const apiKey = 'AIzaSyCrAzt_jdZVJk4nyAj0y-DhQ8gpEqteV-A';
+        
+        function hndlr(response) {
+            const searchUrl = response.items[1].link;
+            const searchClass = ".pictureArea";
+            getElement(searchUrl, searchClass, function(element) {
+                // document.getElementById("content").innerHTML += "<br>" + element.innerHTML;
+                // document.getElementById("content").innerHTML += "<br>" + document.querySelector('.productPicture').src;
+                
+                let newDiv = document.createElement("div");
+                newDiv.appendChild(element);
+                
+                const imgUrl = corsUrl + newDiv.querySelector('.productPicture').src;
+                startDownload(imgUrl);
+            });
+        }
+        
+        function getElement(url, selector, c) {
+            request(new XMLHttpRequest());
+            
+            function request(xhr) {
+                xhr.open('GET', corsUrl + url, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    let html;
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            html = document.createElement('div');
+                            html.innerHTML = xhr.responseText;
+                            c(html.querySelector(selector));
+                        }
+                    }
+                }
+            }
+        }
+        
+        function startDownload(imageURL) {
+            let downloadedImg = new Image;
+            downloadedImg.crossOrigin = "Anonymous";
+            downloadedImg.addEventListener("load", imageReceived, false);
+            downloadedImg.src = imageURL;
+        }
+        
+        function imageReceived() {
+            let canvas = document.createElement("canvas");
+            let context = canvas.getContext("2d");
+            
+            canvas.width = this.width;
+            canvas.height = this.height;
+            
+            context.drawImage(this, 0, 0);
+            
+            try {
+                //localStorage.setItem("saved-image-example", canvas.toDataURL("image/png"));
+                //var pic = localStorage.getItem("saved-image-example");
+                
+                //var pic64 = canvas.toDataURL('image/jpeg', 1.0);
+                
+                const link = document.createElement("a");
+                link.download = "image_1.jpg";
+                link.href = canvas.toDataURL('image/jpeg', 1.0);
+                link.click();
+                link.remove();
+                
+            }
+            catch(err) {
+                console.log("Error: " + err);
+            }
+        }
+    </script>
+    <script src="FileSaver.js"></script>
+    <script src="https://www.googleapis.com/customsearch/v1?key=AIzaSyCrAzt_jdZVJk4nyAj0y-DhQ8gpEqteV-A&cx=000123793121465220160:xw4tm7gc7xm&q=3SB3400-1RC&callback=hndlr"></script>
+</body>
+</html>
