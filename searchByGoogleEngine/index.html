@@ -1,23 +1,65 @@
 <html>
 <head>
     <title>JSON Custom Search API Example</title>
+    <script src="js/FileSaver.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+<!--    <script src="js/d3-fetch.js"></script>-->
 </head>
 <body>
     <div id="content"></div>
     <script>
         const corsUrl = 'https://cors-anywhere.herokuapp.com/';
         const apiKey = 'AIzaSyCrAzt_jdZVJk4nyAj0y-DhQ8gpEqteV-A';
+        const cx = '000123793121465220160:xw4tm7gc7xm';             // *.mall.industry.siemens
+        const query = '3SB3400-1RC';
+
+        let cxList = [{cx: '000123793121465220160:xw4tm7gc7xm', abbr: 'SIE'},       // *.mall.industry.siemens
+                      {cx: '', abbr: ''}
+                      ];
         
+        const csvFileName = 'csv/queryList.csv';
+
+        function createQueryListFromCSV(fileName) {
+            d3.dsv(",", fileName, function(d) {
+                return {
+                    order: d.Order,
+                    vendor: d.Vendor
+                };
+            }).then(function(data) {
+                console.log(data);
+            });
+        }
+        
+        createQueryListFromCSV(csvFileName);
+        
+        let queryList = [{order: '3SB3400-1RC', cxAbbr: 'SIE', imgUrl: ''},
+                         {order: '3RH1921-1HA22', cxAbbr: 'SIE', imgUrl: ''}
+                         ];
+
+        function gSearch(queryList) {
+        
+        }
+        
+        function googleSearch(apiKey, cx, query) {
+            const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&callback=hndlr`;
+            let script = document.createElement('script');
+            script.id = "searchScript";
+            script.src = searchUrl;
+            document.body.appendChild(script);
+        }
+
         function hndlr(response) {
             const searchUrl = response.items[1].link;
             const searchClass = ".pictureArea";
-            getElement(searchUrl, searchClass, function(element) {
+    
+            getElement(searchUrl, searchClass, function (element) {
                 // document.getElementById("content").innerHTML += "<br>" + element.innerHTML;
                 // document.getElementById("content").innerHTML += "<br>" + document.querySelector('.productPicture').src;
-                
+    
                 let newDiv = document.createElement("div");
                 newDiv.appendChild(element);
-                
+    
                 const imgUrl = corsUrl + newDiv.querySelector('.productPicture').src;
                 startDownload(imgUrl);
             });
@@ -31,12 +73,10 @@
                 xhr.send();
                 xhr.onreadystatechange = function() {
                     let html;
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            html = document.createElement('div');
-                            html.innerHTML = xhr.responseText;
-                            c(html.querySelector(selector));
-                        }
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        html = document.createElement('div');
+                        html.innerHTML = xhr.responseText;
+                        c(html.querySelector(selector));
                     }
                 }
             }
@@ -75,8 +115,12 @@
                 console.log("Error: " + err);
             }
         }
+
+        if (document.getElementById("searchScript")) {
+            document.getElementById("searchScript").remove();
+        }
+
+        googleSearch(apiKey, cx, query);
     </script>
-    <script src="FileSaver.js"></script>
-    <script src="https://www.googleapis.com/customsearch/v1?key=AIzaSyCrAzt_jdZVJk4nyAj0y-DhQ8gpEqteV-A&cx=000123793121465220160:xw4tm7gc7xm&q=3SB3400-1RC&callback=hndlr"></script>
 </body>
 </html>
