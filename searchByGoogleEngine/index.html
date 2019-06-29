@@ -1,22 +1,26 @@
 <html>
 <head>
     <title>JSON Custom Search API</title>
-<!--    <script src="js/FileSaver.js"></script>-->
+    
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    
     <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
     <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
-
-    <!--    <script src="js/d3-fetch.js"></script>-->
 </head>
 <body class="bg-light">
     <div id="content"></div>
     
     <div class="container">
-        <div id="alertRow" class="row">
-            <div class="col border border-danger rounded-sm text-danger d-flex align-items-center">
-             Message
-            </div>
+        <div id="alertRow" class="row d-none flex-column">
+            <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 1</div>
+            <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 2</div>
+            <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 3</div>
+            <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 4</div>
         </div>
         <div class="row pt-3 pb-2 justify-content-center align-items-center">
             <div class="input-group">
@@ -29,12 +33,24 @@
         <div class="row pt-1 justify-content-center align-items-center">
             <button type="button" class="btn btn-outline-secondary" onclick="startSearch()">Download images</button>
         </div>
+        <div class="row pt-5 justify-content-center align-items-center">
+            <button type="button" class="btn btn-outline-secondary" onclick="reqToNodeSrv()">Send JSON To NodeSrv</button>
+        </div>
     </div>
-
-    <script src="js/ENV.js"></script>
-    <script src="js/vendorHandlers.js"></script>
-    <script src="js/alert.js"></script>
-    <script src="js/main.js"></script>
+    
+    <script>
+        let time = new Date().getTime();
+        document.write(`<script src='js/ENV.js?${time}'><\/script>`);
+        document.write(`<script src='js/requestToSrv.js?${time}'><\/script>`);
+        document.write(`<script src='js/vendorHandlers.js?${time}'><\/script>`);
+        document.write(`<script src='js/alert.js?${time}'><\/script>`);
+        document.write(`<script src='js/main.js?${time}'><\/script>`);
+    </script>
+    
+<!--    <script src="js/ENV.js"></script>-->
+<!--    <script src="js/vendorHandlers.js"></script>-->
+<!--    <script src="js/alert.js"></script>-->
+<!--    <script src="js/main.js"></script>-->
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

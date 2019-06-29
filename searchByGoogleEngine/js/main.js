@@ -49,15 +49,15 @@ function gSearch(qList) {
         }
         
         switch (cxAbbr) {
-            case "SIE":
+            case "SIE":                 // *.mall.industry.siemens
                 callback = 'hndlrSIE';
                 break;
-            case "SHN":
-                callback = 'hndlrSHN';
+            case "SCH":                 // *.schneider-electric
+                callback = 'hndlrSCH';
                 break;
             default:
                 let message = `Vendor "${cxAbbr}" present in vendorList.csv, but script don\'t have any handler.`;
-                createAlert(message, 'danger')
+                createAlert(message, 'danger');
                 displayAlert();
                 continue;
         }
@@ -87,12 +87,19 @@ function getElement(url, selector, c) {
     
     function request(xhr) {
         xhr.open('GET', corsUrl + url, true);
+        
+        xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
+        
         xhr.send();
         xhr.onreadystatechange = function() {
             let html;
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 html = document.createElement('div');
                 html.innerHTML = xhr.responseText;
+                
+                console.log(`xhr.responseText: ${xhr.responseText}`);
+                console.log(`html: ${html}`);
+                
                 c(html.querySelector(selector));
             }
         }
@@ -134,7 +141,4 @@ function imageReceived() {
     }
 }
 
-hideAlert();
-
-// displayAlert(false);
 // startSearch();
