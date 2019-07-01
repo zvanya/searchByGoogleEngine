@@ -51,17 +51,13 @@ function hndlrSCH(response) {   // *.schneider-electric
     const searchUrl = response.items[0].link;
     const order = response.queries.request[0].searchTerms;
     
-    console.log(`hndlrSCH.searchUrl: ${searchUrl}`);
-    
     const searchClass = ".product-main-info__main-product.js-product-main-info__main-product";
     
-    getElement(searchUrl, searchClass, function (imgElement) {
+    getElement(searchUrl, searchClass, function (divElement) {
         // document.getElementById("content").innerHTML += "<br>" + element.innerHTML;
         // document.getElementById("content").innerHTML += "<br>" + document.querySelector('.productPicture').src;
     
-        console.log(`imgElement: ${imgElement}`);
-        
-        const imgUrl = corsUrl + imgElement.src;
+        const imgUrl = corsUrl + divElement.querySelector('img').src;
         startDownload(imgUrl, order);
     });
 }

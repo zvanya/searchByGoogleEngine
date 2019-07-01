@@ -13,6 +13,7 @@ function startSearch() {
             abbr: d.abbr
         };
     }).then(function(data) {
+        // console.log(`data: ${JSON.stringify(data)}`);
         data.forEach((item) => {
             cxList.push(item);
         });
@@ -70,6 +71,8 @@ function gSearch(qList) {
         
         const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${order}&callback=${callback}`;
         
+        console.log(`gSearch.searchUrl: ${searchUrl}`);
+        
         let scriptId = 'geSearchScript' + i;
         if (document.getElementById(scriptId)) {
             document.getElementById(scriptId).remove();
@@ -97,8 +100,8 @@ function getElement(url, selector, c) {
                 html = document.createElement('div');
                 html.innerHTML = xhr.responseText;
                 
-                console.log(`xhr.responseText: ${xhr.responseText}`);
-                console.log(`html: ${html}`);
+                // console.log(`xhr.responseText: ${xhr.responseText}`);
+                // console.log(`html: ${html.innerHTML}`);
                 
                 c(html.querySelector(selector));
             }
