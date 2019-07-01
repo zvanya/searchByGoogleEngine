@@ -15,26 +15,26 @@
 <body class="bg-light">
     <div id="content"></div>
     
-    <div class="container">
+    <div class="container rounded shadow">
         <div id="alertRow" class="row d-none flex-column">
             <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 1</div>
             <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 2</div>
             <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 3</div>
             <div class="col mb-1 p-1 border border-danger rounded-sm text-danger d-flex align-items-center">Message 4</div>
         </div>
-        <div class="row pt-3 pb-2 justify-content-center align-items-center">
+        <div class="row pb-2 justify-content-center align-items-center">
             <div class="input-group">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" disabled>
                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
             </div>
         </div>
-        <div class="row pt-1 justify-content-center align-items-center">
+        <div class="row pt-3 pb-4 justify-content-center align-items-center">
             <button type="button" class="btn btn-outline-secondary" onclick="startSearch()">Download images</button>
         </div>
-        <div class="row pt-5 justify-content-center align-items-center">
-            <button type="button" class="btn btn-outline-secondary" onclick="reqToNodeSrv()">Send JSON To NodeSrv</button>
+        <div class="row pt-1 justify-content-center align-items-center">
+            <button type="button" class="btn btn-outline-secondary" disabled onclick="reqToNodeSrv()">Send JSON To NodeSrv</button>
         </div>
     </div>
     

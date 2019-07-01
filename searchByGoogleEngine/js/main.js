@@ -56,6 +56,12 @@ function gSearch(qList) {
             case "SCH":                 // *.schneider-electric
                 callback = 'hndlrSCH';
                 break;
+            case "WEI":                 // *.catalog.weidmueller.com
+                callback = 'hndlrWEI';
+                break;
+            case "RIT":                 // *.rittal.com
+                callback = 'hndlrRIT';
+                break;
             default:
                 let message = `Vendor "${cxAbbr}" present in vendorList.csv, but script don\'t have any handler.`;
                 createAlert(message, 'danger');
@@ -68,10 +74,9 @@ function gSearch(qList) {
         });
         
         let cx = cxArr[0].cx;
-        
         const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${order}&callback=${callback}`;
         
-        console.log(`gSearch.searchUrl: ${searchUrl}`);
+        // console.log(`gSearch.searchUrl: ${searchUrl}`);
         
         let scriptId = 'geSearchScript' + i;
         if (document.getElementById(scriptId)) {
@@ -99,10 +104,11 @@ function getElement(url, selector, c) {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 html = document.createElement('div');
                 html.innerHTML = xhr.responseText;
-                
-                // console.log(`xhr.responseText: ${xhr.responseText}`);
-                // console.log(`html: ${html.innerHTML}`);
-                
+
+                if (selector === "*") {
+                    console.log(`xhr.responseText: ${xhr.responseText}`);
+                    console.log(`html: ${html.innerHTML}`);
+                }
                 c(html.querySelector(selector));
             }
         }

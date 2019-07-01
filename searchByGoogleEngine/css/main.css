@@ -1,3 +1,13 @@
 body {
     margin-top: 50px;
 }
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
